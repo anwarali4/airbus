@@ -1,0 +1,65 @@
+hello <%= current_user.company_name%>
+<%= link_to "See AirCraft Part", aircraft_parts_path, method: :get %>
+<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+
+
+<div>
+	
+</div>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-image: url('breg.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #000;
+        }
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            background-color: rgba(165, 238, 251, 0.8);
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="filters">
+        <p>
+        <h3>Purchase Detail:</h3>
+        <h3>Total Purchased item = <%= current_user.purchases.count%></h3></p>
+    </div>
+
+    <div id="products">
+        <!-- Placeholder for products -->
+    </div>
+    <% if @purschases.present? %>
+        <% @purschases.each do |purschase| %>
+        <div class="product-info">
+    	    <h2><%= purschase.aircraft_part.part_name%></h2>
+    	    <p><%= purschase.aircraft_part.material_composition%></p>
+    	    <button>Details</button>
+    	</div>
+       <% end %>
+    <% end %>
+
+
+    
+
+</body>
+</html>

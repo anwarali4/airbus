@@ -1,0 +1,66 @@
+
+<% if user_signed_in? %>
+hello <%= current_user.company_name%>
+
+<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+<% end %>
+
+ <div class="container">
+<table id="customers">
+  <tr>
+    <th>S NO.</th>
+    <th>Part Name</th>
+    <th>Material Composition</th>
+    <th>Condition</th>
+    <th>Details</th>
+    <th>Action</th>
+  </tr>
+  <% @aircraft_parts.each do |part| %>
+      <tr>
+        <td><%= part.id %></td>
+        <td><%= part.part_name %></td>
+        <td><%= part.material_composition %></td>
+        <td><%= part.condition %></td>
+        <td><%= link_to "See Details", aircraft_part_path(part.id), method: :get %></td>
+        <td>
+          <% if part.status %>
+           <%= form_tag(purchases_path, method: :post)do %>
+               <%= hidden_field_tag "aircraft_part_id", part.id %>
+               <%= submit_tag "BUY", class: "btn btn-success" %>
+            <% end %>
+          <% else %>
+            <button type="button" class="btn btn-danger">Sold</button>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  
+</table>
+<%= will_paginate @aircraft_parts %>
+</div>
+
+
+<style type="text/css">
+  #customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #305da2;
+  color: white;
+}
+</style>
